@@ -37,10 +37,15 @@ This version includes ML-powered features using Google Cloud Vision API:
 
 ### Setting up Google Cloud Vision API:
 1. Create a Google Cloud project and enable the Vision API
-2. Create a service account and download the credentials JSON file
-3. Save the credentials file as `google-credentials.json` in the project root
+2. **Enable billing** for your project (required by Google):
+   - Visit the billing page for your project
+   - Add a payment method (new accounts get $300 free credits)
+   - Vision API pricing: First 1,000 units/month are free
+3. Create a service account and download the credentials JSON file
+4. Save the credentials file as `google-credentials.json` in the project root
 
 Note: The credentials file is already in .gitignore for security.
+Without billing enabled, the app will still work but ML features will show placeholder text.
 
 ### Updating existing photos with ML features:
 If you have existing photos without ML features, run:

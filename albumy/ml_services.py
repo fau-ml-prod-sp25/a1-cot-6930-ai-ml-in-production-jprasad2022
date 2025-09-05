@@ -28,7 +28,7 @@ class MLService:
     def generate_alt_text(self, image_path):
         """Generate alt text for an image using Google Vision"""
         if not self.client:
-            return "Image"
+            return "Uploaded image"
         
         try:
             with open(image_path, "rb") as image_file:
@@ -46,10 +46,15 @@ class MLService:
                 alt_text = "Image containing " + ", ".join(top_labels)
                 return alt_text
             
-            return "Image"
+            return "Uploaded image"
         except Exception as e:
-            print(f"Error generating alt text: {e}")
-            return "Image"
+            if "BILLING_DISABLED" in str(e):
+                print("Note: Google Vision API requires billing. Enable billing at:")
+                print("https://console.developers.google.com/billing/enable")
+                return "Uploaded image (ML features require API billing)"
+            else:
+                print(f"Error generating alt text: {e}")
+            return "Uploaded image"
     
     def detect_objects(self, image_path):
         """Detect objects and labels for search functionality"""
@@ -72,7 +77,11 @@ class MLService:
             return tags
             
         except Exception as e:
-            print(f"Error detecting objects: {e}")
+            if "BILLING_DISABLED" in str(e):
+                print("Note: Google Vision API requires billing for object detection")
+                return []
+            else:
+                print(f"Error detecting objects: {e}")
             return []
 
 # Create a global instance
